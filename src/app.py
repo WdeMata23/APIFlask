@@ -4,6 +4,7 @@ from .database.database import engine, Base
 from .Models.Pelicula import Pelicula
 from .routes.peliculas_routes import peliculas_bp
 
+
 try:
     Base.metadata.create_all(bind=engine)
     print("¡Tablas creadas exitosamente (o ya existían)!")
