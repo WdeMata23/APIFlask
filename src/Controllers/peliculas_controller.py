@@ -200,3 +200,24 @@ def actualizar_pelicula(pelicula_id):
         return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
     finally:
         db.close()
+
+
+# funcion para eliminar pelicula por id
+def Eliminar_pelicula(pelicula_id):
+    db = SessionLocal()
+    try:
+        pelicula = db.query(Pelicula).filter(Pelicula.id == pelicula_id).first()
+        if not pelicula:
+            return jsonify({"message": "Película no encontrada"}), HTTPStatus.NOT_FOUND
+
+        db.delete(pelicula)
+        db.commit()
+        return (
+            jsonify({"message": "Película eliminada exitosamente"}),
+            HTTPStatus.NO_CONTENT,
+        )
+    except Exception as e:
+        db.rollback()
+        return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
+    finally:
+        db.close()

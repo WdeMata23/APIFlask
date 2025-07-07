@@ -18,7 +18,7 @@ app.register_blueprint(peliculas_bp, url_prefix="/api")
 
 @app.route("/")
 def index():
-    return jsonify({"Hola": "Mundo con Flask"})
+    return jsonify({"Hola": "Mundo con Flask prueba de hola mundo"})
 
 
 if __name__ == "__main__":

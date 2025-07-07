@@ -4,8 +4,8 @@ from ..Controllers.peliculas_controller import (
     get_peliculas,
     crear_pelicula,
     actualizar_pelicula,
+    Eliminar_pelicula,
 )
-
 
 peliculas_bp = Blueprint("peliculas", __name__)
 
@@ -33,3 +33,8 @@ def create_all_peliculas_route():
 @peliculas_bp.route("/peliculas/<int:pelicula_id>", methods=["PUT"])
 def actualizar_all_peliculas_route(pelicula_id):
     return actualizar_pelicula(pelicula_id)
+
+
+@peliculas_bp.route("/peliculas/<int:pelicula_id>", methods=["DELETE"])
+def Eliminar_all_peliculas_route(pelicula_id):
+    return Eliminar_pelicula(pelicula_id)
