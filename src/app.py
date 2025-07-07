@@ -1,8 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from .database.database import engine, Base
-from .Models.Pelicula import Pelicula
+from .Models import Pelicula, Usuario
 from .routes.peliculas_routes import peliculas_bp
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 
 
 try:
@@ -14,6 +15,14 @@ except Exception as e:
 app = Flask(__name__)
 
 app.register_blueprint(peliculas_bp, url_prefix="/api")
+
+##autenticacion
+app.config["SECRET_KEY"] = "La_Union"
+app.config["JWT_SECRET_KEY"] = "La_Union_App"
+app.config["JWT_TOKEN_LOCATION"] = ["headers"]
+
+# JWT Initialization
+jwt = JWTManager(app)
 
 
 @app.route("/")
