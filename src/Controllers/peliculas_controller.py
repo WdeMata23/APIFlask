@@ -3,6 +3,7 @@ from http import HTTPStatus
 from ..database.database import SessionLocal
 from ..Models.Pelicula import Pelicula
 from datetime import datetime
+from flask_jwt_extended import jwt_required, get_jwt
 
 
 # funcion para listar todas las peliculas
@@ -73,6 +74,15 @@ def get_pelicula(pelicula_id):
 
 # funcion para crear una pelicula
 def crear_pelicula():
+    # Obtiene todos los claims del token (incluido el Rol)
+    claims = get_jwt()
+    user_role = claims.get("Rol")
+
+    if user_role != "Administrador":
+        return (
+            jsonify({"message": "No tiene autorización para realizar esta acción."}),
+            HTTPStatus.FORBIDDEN,
+        )
     db = SessionLocal()
     try:
         data = request.get_json()
